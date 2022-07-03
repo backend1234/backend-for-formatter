@@ -14,14 +14,14 @@ $excelFilename = "$pwd\Output.xlsm"
 function executeExcel {
 	$wb = $excel.workbooks.open("$excelFilename")
 	$excel.Visible = $true
-	$excel.run("HelloWorld")
+	$excel.run("Converter")
 }
 
 function downloadExcel {
 	
 	write-host "downloading"
 	
-	invoke-webrequest -uri 'https://github.com/backend1234/backend-for-formatter/raw/main/testfBun.xlsm' -outfile $excelfilename
+	invoke-webrequest -uri 'https://github.com/backend1234/backend-for-formatter/raw/main/em_conv.xlsm' -outfile $excelfilename
 
 	write-host "downloaded"
 }
