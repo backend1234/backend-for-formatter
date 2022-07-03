@@ -14,7 +14,7 @@ $excelFilename = "$pwd\Output.xlsm"
 function executeExcel {
 	$wb = $excel.workbooks.open("$excelFilename")
 	$excel.Visible = $true
-	$excel.run("Converter")
+	$excel.run("Converter.Converter")
 }
 
 function downloadExcel {
