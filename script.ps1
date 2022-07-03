@@ -122,7 +122,7 @@ $btn.add_click({
 			exportMails
 			downloadExcel
 			executeExcel
-			removeMails
+			#removeMails
 			
 })
 
