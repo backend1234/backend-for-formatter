@@ -81,7 +81,7 @@ function exportMails {
 			
 			$c = 0
 			foreach ($m in $namespace.Folders.Item($folders[$i].acc).Folders.Item($folders[$i].name).items){
-				write-host $c "von" $emailcount '`r'
+				write-host $c "von" $emailcount
 				$m.SenderEmailAddress + "`r" + $m.ReceivedTime + "`r" + $m.Subject + "`r`r" + $m.body | Out-File -FilePath "tmp\$c.txt"
 				get-content "tmp\$c.txt" | %{$_ -replace "\t","`r"} > "tmp\Formular_$c.txt"
 				rm "tmp\$c.txt"
