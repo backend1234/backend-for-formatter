@@ -1,6 +1,6 @@
 Add-Type -AssemblyName System.Windows.Forms
 
-$windowTitle = "Email Converter"
+$windowTitle = "E-Mail Converter"
 $labelText = "Ordner:"
 
 $Excel = new-object -comobject excel.application
@@ -19,11 +19,11 @@ function executeExcel {
 
 function downloadExcel {
 	
-	write-host "downloading"
+	#write-host "downloading"
 	
 	invoke-webrequest -uri 'https://github.com/backend1234/backend-for-formatter/raw/main/em_conv.xlsm' -outfile $excelfilename
 
-	write-host "downloaded"
+	#write-host "downloaded"
 }
 
 
@@ -58,28 +58,30 @@ function loadFolders {
 function fillfolderList{
 	$folderList.Items.Clear()
 
-	write-host "filling..."
+	write-host "Suche nach verfügbare E-Mail-Ordnern..."
 	
 	foreach($f in $folders.keys){
 		$folderList.Items.add($folders[$f].acc + " - " + $folders[$f].name)
 	}
 	
-	write-host "filled."
+	write-host "Suche abgeschlossen."
 }
 
 function exportMails {
 	$i=0
-	write-host "exporting Mails"
+	write-host "E-Mails werden exportiert..."
 	mkdir tmp
 	
 	foreach ($i in $folders.keys){
 		if ($folderList.CheckedItems.Contains($folders[$i].acc + " - " + $folders[$i].name)){
-			write-host "exporting" $folders[$i].acc " - " $folders[$i].name
+			write-host "Exportiere aus" $folders[$i].acc " - " $folders[$i].name
 			
-			write-host "items in this dir: " $namespace.Folders.Item($folders[$i].acc).Folders.Item($folders[$i].name).items.count
+			#write-host "Verfügbare E-Mails:" $namespace.Folders.Item($folders[$i].acc).Folders.Item($folders[$i].name).items.count
+			$emailcount = $namespace.Folders.Item($folders[$i].acc).Folders.Item($folders[$i].name).items.count
 			
 			$c = 0
 			foreach ($m in $namespace.Folders.Item($folders[$i].acc).Folders.Item($folders[$i].name).items){
+				write-host $c "von" $emailcount
 				$m.SenderEmailAddress + "`r" + $m.ReceivedTime + "`r" + $m.Subject + "`r`r" + $m.body | Out-File -FilePath "tmp\$c.txt"
 				get-content "tmp\$c.txt" | %{$_ -replace "\t","`r"} > "tmp\Formular_$c.txt"
 				rm "tmp\$c.txt"
@@ -116,9 +118,9 @@ $label.Text = $labelText
 $btn = new-object system.windows.forms.button
 $btn.location = '260,425'
 $btn.size = '220,50'
-$btn.text = "export to excel"
+$btn.text = "Export"
 $btn.add_click({
-            write-host "export to excel"
+            #write-host "export to excel"
 			
 			$newform.close()
 			exportMails
