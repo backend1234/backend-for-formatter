@@ -58,7 +58,7 @@ function loadFolders {
 function fillfolderList{
 	$folderList.Items.Clear()
 
-	write-host "Suche nach verfügbare E-Mail-Ordnern..."
+	write-host "Suche nach E-Mail-Ordnern..."
 	
 	foreach($f in $folders.keys){
 		$folderList.Items.add($folders[$f].acc + " - " + $folders[$f].name) > $null
@@ -81,7 +81,7 @@ function exportMails {
 			
 			$c = 0
 			foreach ($m in $namespace.Folders.Item($folders[$i].acc).Folders.Item($folders[$i].name).items){
-				write-host $c "von" $emailcount
+				write-host $c "von" $emailcount '`r'
 				$m.SenderEmailAddress + "`r" + $m.ReceivedTime + "`r" + $m.Subject + "`r`r" + $m.body | Out-File -FilePath "tmp\$c.txt"
 				get-content "tmp\$c.txt" | %{$_ -replace "\t","`r"} > "tmp\Formular_$c.txt"
 				rm "tmp\$c.txt"
