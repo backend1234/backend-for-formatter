@@ -61,7 +61,7 @@ function fillfolderList{
 	write-host "Suche nach verfügbare E-Mail-Ordnern..."
 	
 	foreach($f in $folders.keys){
-		$folderList.Items.add($folders[$f].acc + " - " + $folders[$f].name)
+		$folderList.Items.add($folders[$f].acc + " - " + $folders[$f].name) > $null
 	}
 	
 	write-host "Suche abgeschlossen."
